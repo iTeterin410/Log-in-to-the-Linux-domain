@@ -1,7 +1,31 @@
-# Библиотеки Kerberos (все нужные)
-wget http://archive.debian.org/debian/pool/main/k/krb5/libkadm5srv-mit11_1.17-3+deb10u4_amd64.deb
-wget http://archive.debian.org/debian/pool/main/k/krb5/libgssrpc4_1.17-3+deb10u4_amd64.deb
-wget http://archive.debian.org/debian/pool/main/k/krb5/libkdb5-9_1.17-3+deb10u4_amd64.deb
-wget http://archive.debian.org/debian/pool/main/k/krb5/libkrb5-3_1.17-3+deb10u4_amd64.deb
-wget http://archive.debian.org/debian/pool/main/k/krb5/libk5crypto3_1.17-3+deb10u4_amd64.deb
-wget http://archive.debian.org/debian/pool/main/k/krb5/libgssapi-krb5-2_1.17-3+deb10u4_amd64.deb
+Финальный рывок — установка samba-common-bin
+1. Скачай пакет (ссылка рабочая)
+bash
+cd ~/ad-setup
+wget http://archive.debian.org/debian/pool/main/s/samba/samba-common-bin_4.9.5+dfsg-5+deb10u3_amd64.deb
+2. Установи
+bash
+sudo dpkg -i samba-common-bin_4.9.5+dfsg-5+deb10u3_amd64.deb
+3. Если будут ошибки зависимостей
+bash
+sudo apt install -f
+После установки — регистрируем компьютер в домене
+Вариант А — через скрипт
+bash
+sudo ~/join-ad.sh Администратор
+Скрипт теперь найдёт команду net и завершит регистрацию.
+
+Вариант Б — вручную
+bash
+sudo net ads join -k
+Использует уже полученный билет.
+
+Проверка после регистрации
+bash
+realm list
+Должен появиться твой домен.
+
+И наконец — перезагрузка
+bash
+sudo reboot
+После перезагрузки вход под доменной учёткой должен работать.
